@@ -1,0 +1,125 @@
+﻿@model GFR.ViewModels.ReportViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- was .Models.Report -->
+<h2>Reports List</h2>
+
+<p>
+@using (Html.BeginForm("Index", "Reports", FormMethod.Post))
+{
+    <table>
+        <tr>
+            <td style="vertical-align: middle;">
+    @{
+        if (Model.WardsList.ToList().Count == 0)
+        {
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        }
+        else
+        {
+            <a href="@Url.Action("Create", "Reports")" title="Create new report"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
+        }
+    }
+        
+
+        </td>
+            
+            <td style="vertical-align:top;">
+                @{
+                    // if no list exists, disable + button, hide select list, and display message
+                    if (Model.WardsList.ToList().Count == 0)
+                    {
+                        @Html.ActionLink("You must create a Ward before creating a report.", "Index", "Wards");
+                    }
+                    else
+                    {
+                        List<SelectListItem> listItems = new List<SelectListItem>();
+                        listItems.Add(new SelectListItem
+                        {
+                            Text = "",
+                            Value = "0"
+                        });
+                        foreach (var item in Model.WardsList.ToList())
+                        {
+                            listItems.Add(new SelectListItem
+                            {
+                                Text = item.FullName,
+                                Value = item.WardID.ToString(),
+                                Selected = (Model.SelectedWardID == item.WardID ? true : false)
+                            });
+                        }
+                        @Html.DropDownList("id", listItems, new { @class = "form-control", @style = "display-inline", @onchange = "this.form.submit();" });
+                    }
+                }
+                
+            </td>
+        </tr>
+
+    </table>
+}
+    
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Report.Ward.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Report.PeriodText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Report.DurationText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Report.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Report.LastUpdated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Report.SubmittedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Report.StatusText)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.ReportsList.ToList()) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Ward.FullName )
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PeriodText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DurationText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubmittedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusText)
+        </td>
+        <td>
+            <a href="@Url.Action("Edit", "Reports", new { id = item.ReportID })" title="Edit report"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span></a>
+            <a href="@Url.Action("Reports", "Reports", new { id = item.ReportID })" title="View report"><span class="glyphicon glyphicon-file" aria-hidden="true" style="margin-right: 5px;"></span></a>
+            <a href="@Url.Action("Delete", "Reports", new { id = item.ReportID })" title="Delete report"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+
+        </td>
+    </tr>
+}
+
+</table>

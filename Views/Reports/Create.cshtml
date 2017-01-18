@@ -1,0 +1,105 @@
+﻿@model GFR.Models.Report
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>New Report</h4>
+<div>
+    <a href="@Url.Action("Index", "Reports")" title="Back to List"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
+</div>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("UserID", (string)ViewBag.UserID)
+    <div class="form-horizontal">
+        <h4>Report</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.WardID, "WardID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("WardID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.WardID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StateCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.StateCode, new { disabled = "disabled", @readonly = "readonly", style = "width: 30px;" })
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PeriodStartMonth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.PeriodStartMonth, new SelectList(
+                  new List<Object>{
+                      new { value = "1" , text = "Jan" },
+                      new { value = "2" , text = "Feb" },
+                      new { value = "3" , text = "Mar" },
+                      new { value = "4" , text = "Apr" },
+                      new { value = "5" , text = "May" },
+                      new { value = "6" , text = "Jun" },
+                      new { value = "7" , text = "Jul" },
+                      new { value = "8" , text = "Aug" },
+                      new { value = "9" , text = "Sep" },
+                      new { value = "10" , text = "Oct" },
+                      new { value = "11" , text = "Nov" },
+                       new { value = "12" , text = "Dec"}
+                    },
+                  "value",
+                  "text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodStartMonth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PeriodStartYear, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.PeriodStartYear, new SelectList(
+                  new List<Object>{
+                      new { value = "2016" , text = "2016" },
+                      new { value = "2017" , text = "2017" },
+                      new { value = "2018" , text = "2018" },
+                      new { value = "2019" , text = "2019" }
+                    },
+                  "value",
+                  "text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodStartYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PeriodDuration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.PeriodDuration, new SelectList(
+                  new List<Object>{
+                      new { value = "12" , text = "1 Year" },
+                      new { value = "24" , text = "2 Years" },
+                      new { value = "36" , text = "3 Years" }
+                    },
+                  "value",
+                  "text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodDuration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

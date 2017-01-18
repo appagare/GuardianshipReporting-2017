@@ -1,0 +1,47 @@
+﻿@model GFR.Models.UserSetting
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h3>Edit Setting</h3>
+<div>
+    <a href="@Url.Action("Index", "UserSettings")" title="Back to List"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
+</div>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.UserID)
+
+        @Html.HiddenFor(model => model.Group)
+
+        @Html.HiddenFor(model => model.Setting)
+        @Html.HiddenFor(model => model.FriendlyName)
+        @Html.HiddenFor(model => model.Description)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FriendlyName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.FriendlyName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

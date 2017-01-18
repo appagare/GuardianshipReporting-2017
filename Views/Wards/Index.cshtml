@@ -1,0 +1,65 @@
+﻿@model IEnumerable<GFR.Models.Ward>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Wards List</h3>
+
+<p>
+    <a href="@Url.Action("Create", "Wards")" title="Create new ward record"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Suffix)
+        </th>
+        <!--
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUser.Id)
+        </th>
+            -->
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Suffix)
+        </td>
+        <!--
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUser.Id)
+        </td>
+        -->
+        <td>
+            <a href="@Url.Action("Edit", "Wards", new { id = item.WardID })" title="Edit ward record"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span></a> 
+            <!-- <a href="@Url.Action("Details", "Wards", new { id = item.WardID })" title="View ward record"><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 5px;"></span></a>   -->
+            <a href="@Url.Action("Index", "Reports", new { id = item.WardID })" title="View ward reports"><span class="glyphicon glyphicon-file" aria-hidden="true" style="margin-right: 5px;"></span></a>  
+            <a href="@Url.Action("Delete", "Wards", new { id = item.WardID })" title="Delete ward record"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a> 
+            
+        </td>
+    </tr>
+}
+
+</table>

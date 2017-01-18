@@ -1,0 +1,99 @@
+﻿@model GFR.Models.UserCategory
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Edit Category</h3>
+<div>
+    <a href="@Url.Action("Index", "UserCategories")" title="Back to List"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
+</div>
+<hr />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.CategoryID)
+            @Html.HiddenFor(model => model.UserID)
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.StateCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.StateCode, new { disabled = "disabled", @readonly = "readonly", style = "width: 30px;" })
+                    </div>
+                </div>
+            </div>
+               
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryType, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CategoryType, new SelectList(
+                  new List<Object>{
+                      new { value = "1" , text = "Expense" },
+                       new { value = "0" , text = "Income"}
+                    },
+                  "value",
+                  "text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryClass, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CategoryClass, new SelectList(
+                  new List<Object>{
+                      new { value = "0" , text = "Single entry per month" },
+                       new { value = "1" , text = "Multiple entries per month"}
+                    },
+                  "value",
+                  "text"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryClass, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ordinal, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Ordinal, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Ordinal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <!--
+            <div class="form-group">
+                @Html.LabelFor(model => model.Hide, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.Hide)
+                        @Html.ValidationMessageFor(model => model.Hide, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+             -->
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+  
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

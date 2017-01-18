@@ -1,0 +1,68 @@
+﻿@model IEnumerable<GFR.Models.UserCategory>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Report Categories</h3>   
+<p>
+    <a href="@Url.Action("Create", "UserCategories")" title="Create new category"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
+</p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StateCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ordinal)
+            </th>
+            <!--
+            <th>
+                @Html.DisplayNameFor(model => model.Hide)
+            </th>
+            -->
+
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StateCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryClass)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ordinal)
+            </td>
+            <!--
+            <td>
+                @Html.DisplayFor(modelItem => item.Hide)
+            </td>
+            -->
+            <td>
+                <a href="@Url.Action("Edit", "UserCategories", new { id = item.CategoryID })" title="Edit category record"><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span></a>
+                <!-- <a href="@Url.Action("Details", "UserCategories", new { id = item.CategoryID })" title="View category record"><span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="margin-right: 5px;"></span></a> -->
+                <a href="@Url.Action("Delete", "UserCategories", new { id = item.CategoryID })" title="Delete category record"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+            </td>
+        </tr>
+    }
+    
+    </table>
+

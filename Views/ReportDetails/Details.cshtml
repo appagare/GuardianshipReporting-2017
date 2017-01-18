@@ -1,0 +1,107 @@
+﻿@model GFR.Models.ReportDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReportDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Report.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Report.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCategory.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCategory.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ward.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ward.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Worksheet)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Worksheet)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Month)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Month)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ordinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ordinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeletedDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReportDetailID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

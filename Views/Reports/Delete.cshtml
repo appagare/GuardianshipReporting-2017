@@ -1,0 +1,100 @@
+﻿@model GFR.Models.Report
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Report</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AspNetUser.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ward.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ward.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodStartMonth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodStartMonth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodStartYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodStartYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodDuration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodDuration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubmittedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubmittedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeletedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeletedDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
