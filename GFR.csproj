@@ -198,6 +198,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ReportViewModel.cs" />
+    <Compile Include="ViewModels\SettingReportDuration.cs" />
+    <Compile Include="ViewModels\SettingReportStartMonth.cs" />
+    <Compile Include="ViewModels\SettingReportStartYear.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -223,6 +226,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="SQL.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -269,9 +273,6 @@
     <Content Include="Views\UserCategories\Details.cshtml" />
     <Content Include="Views\UserCategories\Edit.cshtml" />
     <Content Include="Views\UserCategories\Index.cshtml" />
-    <Content Include="Views\UserSettings\Create.cshtml" />
-    <Content Include="Views\UserSettings\Delete.cshtml" />
-    <Content Include="Views\UserSettings\Details.cshtml" />
     <Content Include="Views\UserSettings\Edit.cshtml" />
     <Content Include="Views\UserSettings\Index.cshtml" />
     <Content Include="Views\Reports\Create.cshtml" />
@@ -284,6 +285,9 @@
     <Content Include="Views\ReportDetails\Details.cshtml" />
     <Content Include="Views\ReportDetails\Edit.cshtml" />
     <Content Include="Views\ReportDetails\Index.cshtml" />
+    <Content Include="Views\UserSettings\ReportStartMonth.cshtml" />
+    <Content Include="Views\UserSettings\ReportDuration.cshtml" />
+    <Content Include="Views\UserSettings\ReportStartYear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

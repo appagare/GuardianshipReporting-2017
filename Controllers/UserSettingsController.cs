@@ -82,6 +82,26 @@ namespace GFR.Controllers
             {
                 return HttpNotFound();
             }
+
+            switch (setting)
+            {
+                case ReportValues.REPORT_SETTING_PERIOD_DURATION:
+                    // cast as specific 
+                    GFR.ViewModels.SettingReportDuration srd = new ViewModels.SettingReportDuration(userSetting);
+                    //srd.UserSetting = userSetting;
+                    return View("ReportDuration", srd);
+                    break;
+                case ReportValues.REPORT_SETTING_PERIOD_START_MONTH:
+                    GFR.ViewModels.SettingReportStartMonth srm = new ViewModels.SettingReportStartMonth(userSetting);
+                    //srm.UserSetting = userSetting;
+                    return View("ReportStartMonth", srm);
+                    break;
+                default:
+                    GFR.ViewModels.SettingReportStartYear sry = new ViewModels.SettingReportStartYear(userSetting);
+                    //sry.UserSetting = userSetting;
+                    return View("ReportStartYear", sry);
+                    break;
+            }
             return View(userSetting);
         }
 

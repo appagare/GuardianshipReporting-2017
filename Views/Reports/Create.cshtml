@@ -7,7 +7,7 @@
 
 <h4>New Report</h4>
 <div>
-    <a href="@Url.Action("Index", "Reports")" title="Back to List"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
+    <a href="@Url.Action("Index", "Reports", new { id = Model.WardID })" title="Back to List"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a>
 </div>
 
 @using (Html.BeginForm()) 
@@ -26,6 +26,7 @@
             </div>
         </div>
 
+        <!--
         <div class="form-group">
             @Html.LabelFor(model => model.StateCode, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -34,6 +35,7 @@
                 </div>
             </div>
         </div>
+        -->
 
 
 

@@ -23,12 +23,14 @@
         @Html.HiddenFor(model => model.UserID)
         @Html.HiddenFor(model => model.CreateDate)
 
+        <!--
         <div class="form-group">
             @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
+        -->
 
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -83,15 +85,44 @@
             </div>
         </div>
 
-        <!--
         <div class="form-group">
-            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PeriodStartMonth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.DOB, new { @class = "form-control", @type = "date" })
-                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.PeriodStartMonth, new SelectList(
+                  new List<Object>{
+                      new { value = 1 , text = "Jan"},
+                       new { value = 2 , text = "Feb" },
+                       new { value = 3 , text = "Mar" },
+                       new { value = 4 , text = "Apr" },
+                       new { value = 5 , text = "May" },
+                       new { value = 6 , text = "Jun" },
+                       new { value = 7 , text = "Jul" },
+                       new { value = 8 , text = "Aug" },
+                       new { value = 9 , text = "Sep" },
+                       new { value = 10 , text = "Oct" },
+                       new { value = 11 , text = "Nov" },
+                       new { value = 12 , text = "Dec"}
+                    },
+                  "value",
+                  "text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodStartMonth, "", new { @class = "text-danger" })
             </div>
         </div>
-            -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.PeriodDuration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.PeriodDuration, new SelectList(
+                  new List<Object>{
+                      new { value = 12 , text = "1 Year"},
+                       new { value = 24 , text = "2 Year" },
+                       new { value = 36 , text = "3 Year"}
+                    },
+                  "value",
+                  "text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PeriodDuration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

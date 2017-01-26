@@ -28,10 +28,14 @@ namespace GFR.Models
 
         public byte Month { get; set; }
 
+        public short Year { get; set; }
+
         [Column(TypeName = "money")]
         public decimal Value { get; set; }
 
-        public short Ordinal { get; set; }
+        public byte VOrdinal { get; set; }
+
+        public byte HOrdinal { get; set; }
 
         public DateTime LastUpdated { get; set; }
 

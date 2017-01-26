@@ -23,7 +23,8 @@ namespace GFR.Controllers
             ViewBag.UserID = UserID; // User.Identity.GetUserId();
 
             // var userCategories = db.UserCategories.Include(u => u.AspNetUser).Where(u => u.UserID == UserID);
-            var userCategories = db.UserCategories.Where(u => u.UserID == UserID);
+            var userCategories = db.UserCategories.Where(u => u.UserID == UserID)
+                .Where(u => u.Hide == false);
             return View(userCategories.ToList()
                 .OrderBy(u => u.StateCode)
                 .ThenBy(u => u.CategoryType)
@@ -45,6 +46,8 @@ namespace GFR.Controllers
             {
                 return HttpNotFound();
             }
+            // prevent hidden categories from being shown?
+
             ViewBag.UserID = userCategory.UserID;  
             return View(userCategory);
         }
@@ -89,6 +92,7 @@ namespace GFR.Controllers
             {
                 return HttpNotFound();
             }
+            // prevent hidden categories from being shown?
             // ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.UserID = userCategory.UserID;
             return View(userCategory);
@@ -133,6 +137,7 @@ namespace GFR.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            // todo: change this to only set the "Hide" flag
             UserCategory userCategory = db.UserCategories.Find(id);
             db.UserCategories.Remove(userCategory);
             db.SaveChanges();

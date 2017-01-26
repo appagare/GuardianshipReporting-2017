@@ -22,11 +22,9 @@ namespace GFR.Controllers
             string UserID = User.Identity.GetUserId();
             ViewBag.UserID = UserID; // User.Identity.GetUserId();
             // var wards = db.Wards.Include(w => w.AspNetUser).Where(w => w.UserID == UserID);
-            var wards = db.Wards.Where(w => w.UserID == UserID);
+            var wards = db.Wards.Where(w => w.UserID == UserID)
+                .Where(w => w.DeletedDate == null);
 
-            // uncomment to re-initialize existing users if necessary
-            // run this to reseed DBCC CHECKIDENT (UserCategory, RESEED, 0)
-            // InitializeAccountHelper.InitializeNewUser(UserID);
 
             return View(wards.ToList());
         }
@@ -45,6 +43,10 @@ namespace GFR.Controllers
             {
                 // index or error
                 return HttpNotFound();
+            } else if (ward.DeletedDate != null)
+            {
+                // don't show deleted wards
+                return HttpNotFound();
             }
 
             // ViewBag.UserID = User.Identity.GetUserId();
@@ -55,8 +57,31 @@ namespace GFR.Controllers
         // GET: Wards/Create
         public ActionResult Create()
         {
-            ViewBag.UserID = User.Identity.GetUserId();
-            return View();
+            string UserID = User.Identity.GetUserId();
+            ViewBag.UserID = UserID; // User.Identity.GetUserId();
+            Ward ward = new Ward();
+            ward.UserID = UserID;
+             
+            List<UserSetting> defaults = db.UserSettings.Where(u => u.UserID == UserID).ToList();
+
+            foreach (UserSetting u in defaults)
+            {
+                if (u.Setting.ToUpper() == ReportValues.REPORT_SETTING_PERIOD_DURATION.ToUpper())
+                {
+
+                    ward.PeriodDuration = Convert.ToByte(u.Value);
+
+                }
+                else if (u.Setting.ToUpper() == ReportValues.REPORT_SETTING_PERIOD_START_MONTH.ToUpper())
+                {
+                    ward.PeriodStartMonth = Convert.ToByte(u.Value);
+
+                }
+            }
+
+            return View(ward);
+
+            //return View();
         }
 
         // POST: Wards/Create
@@ -64,7 +89,7 @@ namespace GFR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "WardID,UserID,FirstName,MiddleName,LastName,Suffix,Gender,DOB,CreateDate,LastUpdated,DeletedDate")] Ward ward)
+        public ActionResult Create([Bind(Include = "WardID,UserID,FirstName,MiddleName,LastName,Suffix,Gender,PeriodStartMonth,PeriodDuration,CreateDate,LastUpdated,DeletedDate")] Ward ward)
         {
             if (ModelState.IsValid)
             {
@@ -102,6 +127,13 @@ namespace GFR.Controllers
                 // index or error
                 return HttpNotFound();
             }
+            else if (ward.DeletedDate != null)
+            {
+                // don't show deleted wards
+                return HttpNotFound();
+            }
+
+
             // ViewBag.UserID = User.Identity.GetUserId();
             // ViewBag.UserID = User.Identity.GetUserId();
             ViewBag.UserID = ward.UserID;
@@ -113,7 +145,7 @@ namespace GFR.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "WardID,UserID,FirstName,MiddleName,LastName,Suffix,Gender,DOB,CreateDate")] Ward ward)
+        public ActionResult Edit([Bind(Include = "WardID,UserID,FirstName,MiddleName,LastName,Suffix,Gender,PeriodStartMonth,PeriodDuration,CreateDate")] Ward ward)
         {
             if (ModelState.IsValid)
             {
@@ -156,6 +188,12 @@ namespace GFR.Controllers
                 // index or error
                 return HttpNotFound();
             }
+            else if (ward.DeletedDate != null)
+            {
+                // don't show deleted wards
+                return HttpNotFound();
+            }
+
             ViewBag.UserID = ward.UserID;
             return View(ward);
         }
@@ -165,6 +203,7 @@ namespace GFR.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            // todo: change this to only set the DeletedDate;
             Ward ward = db.Wards.Find(id);
             db.Wards.Remove(ward);
             db.SaveChanges();

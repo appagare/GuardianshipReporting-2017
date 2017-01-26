@@ -99,6 +99,12 @@ namespace GFR.Controllers
             {
                 return HttpNotFound();
             }
+            else if (report.DeletedDate != null)
+            {
+                // don't show deleted records
+                return HttpNotFound();
+            }
+
             ViewBag.UserID = report.UserID;
             return View(report);
         }
@@ -106,52 +112,16 @@ namespace GFR.Controllers
         // GET: Reports/Create
         public ActionResult Create(int? id)
         {
-            // SQL 
-            //select * from Reports r 
-            // inner join Wards w 
-            // on r.WardID=w.WardID 
-            // where r.UserID=UserID
-
-
-            // LINQ
-            //IEnumerable<SelectListItem> stores =
-            // from store in database.Stores
-            // where store.CompanyID == curCompany.ID
-            // select new SelectListItem { Value = store.Name, Text = store.ID };
-
-            // Lambda
-            //IEnumerable<SelectListItem> stores = 
-            //   database.Stores
-            //       .Where(store => store.CompanyID == curCompany.ID)
-            //       .Select(store => new SelectListItem { Value = store.Name, Text = store.ID });
-
-            //if (id == null)
-            //{
-            //    // todo - add custom error handling regarding missing WardID; until then, show index when no id passed
-            //    return RedirectToAction("Index");
-            //} else if (id < 1)
-            //{
-            //    // todo - add custom error handling regarding missing WardID; until then, show index when no id passed
-            //    return RedirectToAction("Index");
-            //}
 
             string UserID = User.Identity.GetUserId();
             // var reports = db.Reports.Include(r => r.AspNetUser).Where(r => r.UserID == UserID);
             ViewBag.UserID = UserID;
 
-            //   db.Reports
-            //       .Where(w => w.CompanyID == curCompany.ID)
-            //       .Select(store => new SelectListItem { Value = store.Name, Text = store.ID });
-
-            // var wards = db.Wards.Where(w => w.UserID == UserID);
-            // ViewBag.WardID = new SelectList(userWards(UserID), "WardID", "FullName");
-            // ViewBag.WardID = id;
-
+            
             // non-deleted 
             UserSetting s = new UserSetting();
             Report r = new Report { UserID = UserID };
-            //r.UserID = UserID;
-
+            
             // set defaults
             List<UserSetting> defaults = db.UserSettings.Where(u => u.UserID == UserID).ToList();
 
@@ -173,10 +143,26 @@ namespace GFR.Controllers
 
                 }
             }
-            
 
-            ViewBag.WardID = new SelectList(userWards(UserID), "WardID", "FullName");
-            //Report report = new Report { UserID = UserID };
+            // ward-specific
+            // todo: fix this; it should be the underlying value
+
+            if (id != null)
+            {
+                r.PeriodStartMonth = (ReportValues.MonthTypes)Enum.Parse(typeof(ReportValues.MonthTypes), db.Wards.Find(id).PeriodStartMonth.ToString());
+                r.PeriodDuration = (ReportValues.DurationTypes)Enum.Parse(typeof(ReportValues.DurationTypes), db.Wards.Find(id).PeriodDuration.ToString());
+
+                // todo: set this to the last completed report + duration
+                // r.PeriodStartYear = 
+                ViewBag.WardID = new SelectList(userWards(UserID), "WardID", "FullName", id);
+
+            } else
+            {
+                ViewBag.WardID = new SelectList(userWards(UserID), "WardID", "FullName");
+            }
+
+            
+            
             
      return View(r);
  }
@@ -194,7 +180,7 @@ namespace GFR.Controllers
          report.LastUpdated = DateTime.Now;
          db.Reports.Add(report);
          db.SaveChanges();
-         return RedirectToAction("Index");
+         return RedirectToAction("Index", new { id = report.WardID });
      }
 
      ViewBag.UserID = User.Identity.GetUserId();
@@ -215,6 +201,11 @@ namespace GFR.Controllers
      {
          return HttpNotFound();
      }
+     else if (report.DeletedDate != null)
+     {
+        // don't show deleted records
+        return HttpNotFound();
+     }
      ViewBag.UserID = report.UserID;
      //var wards = db.Wards.Where(w => w.UserID == report.UserID);
      ViewBag.WardID = new SelectList(userWards(report.UserID), "WardID", "FullName");
@@ -233,7 +224,7 @@ namespace GFR.Controllers
         report.LastUpdated = DateTime.Now;
         db.Entry(report).State = EntityState.Modified;
          db.SaveChanges();
-         return RedirectToAction("Index");
+         return RedirectToAction("Index", new { id = report.WardID });
      }
      ViewBag.UserID = report.UserID;
      ViewBag.WardID = new SelectList(userWards(report.UserID), "WardID", "FullName");
@@ -253,6 +244,11 @@ namespace GFR.Controllers
      {
          return HttpNotFound();
      }
+     else if (report.DeletedDate != null)
+     {
+        // don't show deleted records
+        return HttpNotFound();
+     }
      ViewBag.UserID = report.UserID;
      return View(report);
  }
@@ -262,6 +258,7 @@ namespace GFR.Controllers
  [ValidateAntiForgeryToken]
  public ActionResult DeleteConfirmed(int id)
  {
+     // todo: change this to only set the DeletedDate;
      Report report = db.Reports.Find(id);
      db.Reports.Remove(report);
      db.SaveChanges();

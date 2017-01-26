@@ -21,21 +21,37 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td title="@item.Description">
+                @Html.DisplayFor(modelItem => item.Group)
+            </td>
+            <td title="@item.Description">
+                @Html.DisplayFor(modelItem => item.FriendlyName)
+            </td>
+            <td title="@item.Description">
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "UserSettings", new { group = item.Group, setting = item.Setting  })" title='Edit "@item.Description" record'><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span></a>
+            </td>
+        </tr>
+    }
+
     <tr>
-        <td title="@item.Description">
-            @Html.DisplayFor(modelItem => item.Group)
-        </td>
-        <td title="@item.Description">
-            @Html.DisplayFor(modelItem => item.FriendlyName)
-        </td>
-        <td title="@item.Description">
-            @Html.DisplayFor(modelItem => item.Value)
-        </td>
+        <td colspan="3"></td>
         <td>
-            <a href="@Url.Action("Edit", "UserSettings", new { group = item.Group, setting = item.Setting  })" title='Edit "@item.Description" record'><span class="glyphicon glyphicon-pencil" aria-hidden="true" style="margin-right: 5px;"></span></a>
+            <div class="text-right">
+                <br />
+                <a href="@Url.Action("Index", "UserCategories")" title="Modify report categories (CAUTION!)">Report Categories</a>
+            </div>
         </td>
+
     </tr>
-}
 
 </table>
+
+
+
+

@@ -14,13 +14,13 @@
         <tr>
             <td style="vertical-align: middle;">
     @{
-        if (Model.WardsList.ToList().Count == 0)
+        if ((Model.WardsList.ToList().Count == 0) || (Model.SelectedWardID < 1))
         {
             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
         }
         else
         {
-            <a href="@Url.Action("Create", "Reports")" title="Create new report"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
+            <a href="@Url.Action("Create", "Reports", new { id = Model.SelectedWardID })" title="Create new report"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>
         }
     }
         
@@ -122,4 +122,13 @@
     </tr>
 }
 
+
+
 </table>
+
+<div class="text-right">
+    <br />
+    <a href="@Url.Action("Index", "UserSettings")" title="Modify report settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+</div>
+
+

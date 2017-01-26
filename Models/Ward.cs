@@ -44,10 +44,19 @@ namespace GFR.Models
         [StringLength(1)]
         public string Gender { get; set; }
 
-        [Column(TypeName = "smalldatetime")]
-        [Display(Name = "Date of Birth")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime? DOB { get; set; }
+        //[Column(TypeName = "smalldatetime")]
+        //[Display(Name = "Date of Birth")]
+        //[DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        //public DateTime? DOB { get; set; }
+
+        [Required]
+        [Display(Name = "Start Month")]
+        [Range(1, 12, ErrorMessage = "Month is required")]
+        public byte PeriodStartMonth { get; set; }
+
+        [Required]
+        [Display(Name = "Report Duration")]
+        public byte PeriodDuration { get; set; }
 
         [Display(Name = "Record Created")]
         public DateTime CreateDate { get; set; }
